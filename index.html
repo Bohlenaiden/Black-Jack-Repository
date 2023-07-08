@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Web Page</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" >
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Numerical BlackJack<u>(WINS are 1.5x)</u></h1>
+  <div id="dealersSide">
+    <label id="labelOne"><b>Wallet:<a id="storage"></a></b></label>
+    <label id="betOne"><b>Bet:<a id="storage2"></a></b></label>
+    <div id="card1">
+    <a id="dealersCards"></a>
+    <div>
+    <br>
+    <div id="card2">
+    <a id="dealersCards2"></a>
+    </div>
+    <br>
+    <div id="card3">
+    <a id="dealersCards3"></a>
+    <div>
+    <br>
+    <div id="card4">
+    <a id="dealersCards4"></a>
+    </div>
+  </div>
+  <div id="playerCards">
+  <p id="one"></p>
+  <p id="two"></p>
+  <p id="three"></p>
+  <p id="eight"></p>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <button onclick="playersDeal()" id="button">Players Cards</button>
+  <button id="button2" onclick="hit()">HIT</button> <button id="button3" onclick="stay()">STAY</button>
+  <script>
+    var cardArt1 = document.getElementById("card1");
+    var cardArt2 = document.getElementById("card2");
+    var cardArt3 = document.getElementById("card3");
+    var cardArt4 = document.getElementById("card4");
+    var cardDeck = ["1","2","3","4","5","6","7","8","9","10","10","10","10","11"];
+    var eighth = document.querySelector("#eight");
+    var seventh = document.getElementById("dealersCards4");
+    var sixth = document.getElementById("dealersCards3");
+    var button2 = document.getElementById("button2");
+    var button3 = document.getElementById("button3");
+    var button = document.getElementById("button");
+    var fourth = document.getElementById("dealersCards");
+    var fifth = document.getElementById("dealersCards2");
+    var first = document.getElementById("one");
+    var second = document.getElementById("two");
+    var third =  document.getElementById("three");
+    function playersDeal(){
+      if(bet == 0){
+        alert("PLEASE PLACE A BET")
+      }else{
+        cardArt1.style.border = "solid black 2.5px"
+      cardArt1.style.background = "#FF3632";
+      cardArt1.style.transitionDuration = "1s";
+      first.innerHTML = cardDeck[Math.floor(Math.random()* cardDeck.length)]
+      second.innerHTML = cardDeck[Math.floor(Math.random()* cardDeck.length)]
+      first.value = first.innerHTML;
+      second.value = second.innerHTML;
+      third.value = third.innerHTML;
+      sixth.value = sixth.innerHTML;
+      fourth.innerHTML = cardDeck[Math.floor(Math.random()* cardDeck.length)]
+      button.style.opacity = .5;
+      button2.style.opacity = 1;
+      button3.style.opacity = 1;
+      button.style.transitionDuration = "1s";
+       button2.style.transitionDuration = "1s";
+        button3.style.transitionDuration = "1s";
+      if(((+first.value) + (+second.value)) == 21){
+        alert("BlackJack")
+        alert("You Win!")
+        storage1.innerHTML = "$" + ((+wallet)+ (+bet * 1.5));
+        storageTwo.innerHTML = "$" + 0;
+       }
+      }
+    }
+    function stay(){
+      sixth.value = sixth.innerHTML;
+      seventh.value = seventh.innerHTML;
+      cardArt2.style.border = "solid black 2.5px";
+      cardArt2.style.background = "#FF3632";
+      cardArt2.style.transitionDuration = "1s";
+      if(sixth.value > 0){
+        cardArt3.style.background = "#FF3632";
+      cardArt3.style.border = "solid black 2.5px";
+      cardArt3.style.transitionDuration = "1s";
+      }
+      if(seventh.value > 0){
+        cardArt4.style.background = "#FF3632";
+      cardArt4.style.border = "solid black 2.5px";
+      cardArt4.style.transitionDuration = "1s";
+      }
+       fifth.innerHTML = cardDeck[Math.floor(Math.random()* cardDeck.length)]
+      fifth.value = fifth.innerHTML;
+      fourth.value = fourth.innerHTML;
+      if(((+fourth.value) + (+fifth.value)) < 17){
+        sixth.innerHTML = cardDeck[Math.floor(Math.random()* cardDeck.length)];
+         sixth.style.color = "white";
+        sixth.style.transitionDuration = "2s";
+        seventh.style.color = "white";
+        seventh.style.transitionDuration = "2s";
+          sixth.value = sixth.innerHTML;
+        if(((+fourth.value) + (+fifth.value) +(+sixth.value) < 17)){
+          seventh.innerHTML = cardDeck[Math.floor(Math.random()* cardDeck.length)]
+        }
+      }
+      first.value = first.innerHTML;
+      second.value = second.innerHTML;
+      third.value = third.innerHTML;
+      eight.value = eight.innerHTML;
+      fourth.value = fourth.innerHTML;
+      fifth.value = fifth.innerHTML;
+      sixth.value = sixth.innerHTML;
+      seventh.value = seventh.innerHTML;
+      let dealerTotal = ((+fourth.value) + (+fifth.value) +(+sixth.value) + (+seventh.value));
+      let playerTotal = ((+first.value)+(+second.value) +(+third.value) + (+eight.value));
+      if(dealerTotal > 21){
+        dealerTotal = 0;
+      }if(playerTotal > 21){
+        playerTotal = 0;
+      }
+      if(dealerTotal > playerTotal){
+        alert("Dealer wins")
+        storage1.innerHTML = "$" + wallet;
+        storageTwo.innerHTML = "$" + 0;
+      }else{
+        alert("You Win!")
+        storage1.innerHTML = "$" + ((+wallet)+ (+bet * 1.5));
+        storageTwo.innerHTML = "$" + 0;
+      }
+    }
+    var clicks = 0;
+    function hit(){
+      clicks++
+      switch(clicks){
+        case 1:
+        third.innerHTML = cardDeck[Math.floor(Math.random()* cardDeck.length)]
+        first.value = first.innerHTML;
+        second.value = second.innerHTML;
+        third.value = third.innerHTML;
+        if(((+first.value)+(+second.value)+(+third.value) > 21)){
+          alert("BUST");
+          alert("Dealer Wins")
+          storageTwo.innerHTML = "$" + 0;
+          button2.style.opacity = .5;
+        }if(((+first.value)+(+second.value)+(+third.value) == 21)){
+          alert("BlackJack")
+          alert("You Win!")
+          wallet++
+          storage1.innerHTML = ((+wallet) + (+bet * 1.5));
+          storageTwo.innerHTML = "$" + 0;
+        }
+        break;
+        case 2:
+         eight.innerHTML = cardDeck[Math.floor(Math.random()* cardDeck.length)]
+         eight.value = eight.innerHTML
+         if(((+first.value)+(+second.value)+(+third.value) +(+eight.value) > 21)){
+          alert("BUST");
+          alert("Dealer Wins")
+          storageTwo.innerHTML = "$" + 0;
+          button2.style.opacity = .5;
+        }if(((+first.value)+(+second.value)+(+third.value) == 21)){
+          alert("BlackJack")
+          alert("You Win!")
+          storage1.innerHTML = "$" + ((+wallet) + (+bet * 1.5));
+          storageTwo.innerHTML = "$" + 0;
+        }
+      }
+    }
+    var cardDeck = ["1","2","3","4","5","6","7","8","9","10","10","10","10","11"];
+    </script>
+  <script>
+  </script>
+  <div id="chip" onclick="chip()" draggable="true">
+    <br>
+    $1
+  </div>
+  <div id="pot"><i><br>Bets<br>Here</i></div>
+  <script>
+    var storageTwo = document.getElementById("storage2");
+    var storage1 = document.getElementById("storage");
+    var firstChip = document.getElementById("chip");
+    let wallet = 10;
+    let bet = 0;
+    let clicks2 = 0
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$" + bet;
+    function chip(){
+      storage1.value = storage1.innerHTML
+      if(wallet < 1){
+        alert("NOT ENOUGH FUNDS")
+      }
+       clicks2++
+      switch(clicks2){
+        case 1:
+        firstChip.style.animation = "chipMove 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 2:
+        firstChip.style.animation = "chipMove2 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 3:
+        firstChip.style.animation = "chipMove3 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 4:
+        firstChip.style.animation = "chipMove4 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 5:
+        firstChip.style.animation = "chipMove5 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 6:
+        firstChip.style.animation = "chipMove6 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 7:
+        firstChip.style.animation = "chipMove7 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 8:
+        firstChip.style.animation = "chipMove8 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 9:
+        firstChip.style.animation = "chipMove9 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+        break;
+        case 10:
+        firstChip.style.animation = "chipMove10 1s";
+    wallet--
+    bet++
+    storage1.innerHTML = "$" + wallet;
+    storageTwo.innerHTML = "$"+ bet;
+      }
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
